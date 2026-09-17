@@ -2,16 +2,25 @@
 const MediaRow = (props) => {
   const {item} = props;
   return (
-     <tr key={item.media_id}>
-              <td>
-                <img src={item.thumbnail} alt={item.title} />
-              </td>
-              <td>{item.title}</td>
-              <td>{item.description}</td>
-              <td>{new Date(item.created_at).toLocaleString('fi-FI')}</td>
-              <td>{item.filesize}</td>
-              <td>{item.media_type}</td>
-            </tr>
+    <tr
+      onClick={() => {
+        props.setSelectedItem(media);
+      }}
+    >
+      <td>
+        <img
+          src={media.thumbnail}
+          alt={media.description}
+          title={media.description}
+        />
+      </td>
+
+      <td>{media.title}</td>
+      <td>{media.description}</td>
+      <td>{new Date(media.created_at).toLocaleDateString('fi-FI')}</td>
+      <td>{media.filesize}</td>
+      <td>{media.media_type}</td>
+    </tr>
   );
 };
 
