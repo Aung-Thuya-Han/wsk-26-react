@@ -14,3 +14,5 @@ const MediaRow = (props) => {
             </tr>
   );
 };
+
+export default MediaRow;
