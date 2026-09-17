@@ -1,6 +1,6 @@
 // src/components/MediaRow.jsx
 const MediaRow = (props) => {
-  const {item} = props;
+  const media = props.media;
   return (
     <tr
       onClick={() => {

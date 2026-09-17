@@ -6,6 +6,7 @@ const MediaRows = (props) => {
       key={media.media_id}
       media={media}
       setSelectedItem={props.setSelectedItem}
+      selectedItem={props.selectedItem}
     />
   ));
 };

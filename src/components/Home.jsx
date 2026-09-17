@@ -51,7 +51,14 @@ const [selectedItem, setSelectedItem] = useState(null);
     <>
       <h2>My Media</h2>
 
-      <SingleView item={selectedItem} setSelectedItem={setSelectedItem} />
+      {selectedItem ? (
+        <SingleView
+        media={selectedItem}
+        setSelectedItem={setSelectedItem}
+          />
+        ) : (
+          ''
+        )}
 
       <table>
         <thead>
@@ -69,6 +76,7 @@ const [selectedItem, setSelectedItem] = useState(null);
             <MediaRows
               items={mediaArray}
               setSelectedItem={setSelectedItem}
+              selectedItem={selectedItem}
             />
           
         </tbody>
