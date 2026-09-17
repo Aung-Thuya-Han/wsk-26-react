@@ -9,38 +9,43 @@ const Home = () => {
 
 const mediaArray = [
   {
-    media_id: 8,
-    user_id: 5,
-    filename: 'https://place-hold.it/1200x800.jpg&text=Pic1&fontsize=120',
-    thumbnail: 'http://place-hold.it/320/240.jpg&text=Thumb2&fontsize=20',
-    filesize: 170469,
-    media_type: 'image/jpeg',
-    title: 'Picture 1',
-    description: 'This is a placeholder picture.',
-    created_at: '2024-01-07T20:49:34.000Z',
-  },
-  {
-    media_id: 9,
-    user_id: 7,
-    filename: 'https://place-hold.it/800x600.jpg&text=Pic2&fontsize=72',
-    thumbnail: 'http://place-hold.it/320/240.jpg&text=Thumb3&fontsize=20',
-    filesize: 1002912,
-    media_type: 'image/jpeg',
-    title: 'Pic 2',
-    description: '',
-    created_at: '2024-01-07T21:32:27.000Z',
-  },
-  {
-    media_id: 17,
-    user_id: 2,
+    media_id: 1,
+    user_id: 1,
     filename:
-      'http://distribution.bbb3d.renderfarming.net/video/mp4/bbb_sunflower_1080p_60fps_normal.mp4',
-    thumbnail: 'http://place-hold.it/320/240.jpg&text=Thumb1&fontsize=20',
-    filesize: 1236616,
+      'https://commons.wikimedia.org/wiki/Special:Redirect/file/Cat_.jpg?width=1200',
+    thumbnail:
+      'https://commons.wikimedia.org/wiki/Special:Redirect/file/Cat_.jpg?width=320',
+    filesize: 2760000,
+    media_type: 'image/jpeg',
+    title: 'Relaxing Cat',
+    description: 'A cat relaxing on a small sofa.',
+    created_at: '2026-09-17T10:00:00.000Z',
+  },
+  {
+    media_id: 2,
+    user_id: 1,
+    filename:
+      'https://commons.wikimedia.org/wiki/Special:Redirect/file/Dog_(23895191068).jpg?width=1200',
+    thumbnail:
+      'https://commons.wikimedia.org/wiki/Special:Redirect/file/Dog_(23895191068).jpg?width=320',
+    filesize: 7390000,
+    media_type: 'image/jpeg',
+    title: 'Friendly Dog',
+    description: 'A close photograph of a friendly dog.',
+    created_at: '2026-09-17T11:00:00.000Z',
+  },
+  {
+    media_id: 3,
+    user_id: 1,
+    filename:
+      'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4',
+    thumbnail:
+      'https://commons.wikimedia.org/wiki/Special:Redirect/file/Sunflower_.jpg?width=320',
+    filesize: 1120000,
     media_type: 'video/mp4',
-    title: 'Bunny',
-    description: 'Butterflies fly around the bunny.',
-    created_at: '2024-01-07T20:48:13.000Z',
+    title: 'Flower Video',
+    description: 'A short video of a flower moving in the wind.',
+    created_at: '2026-09-17T12:00:00.000Z',
   },
 ];
 
