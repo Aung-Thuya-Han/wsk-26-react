@@ -1,5 +1,7 @@
 const SingleView = (props) => {
   const media = props.media;
+  const type = media.media_type.split('/');
+  const isImage = type[0].toLowerCase() === 'image';
 
   return (
     <dialog open>
@@ -15,11 +17,18 @@ const SingleView = (props) => {
         </button>
       </div>
       
-      <img
-        src={media.filename}
-        alt={media.description}
-        title={media.description}
-      />
+        {isImage ? (
+          <img
+            src={media.filename}
+            alt={media.description}
+            title={media.description}
+          />
+        ) : (
+          <video
+            src={media.filename}
+            controls
+          />
+        )}
 
       <p>{media.description}</p>
     </dialog>
