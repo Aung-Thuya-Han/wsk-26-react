@@ -9,5 +9,5 @@ export default defineConfig({
     babel({ presets: [reactCompilerPreset()] })
   ],
 
-  base: '/~aungthuh/wsk-26-react/',
+  base: '/~aungthuh/hooks/',
 })
