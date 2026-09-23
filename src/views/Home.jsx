@@ -53,6 +53,15 @@ const [selectedItem, setSelectedItem] = useState(null);
 
 const [mediaArray, setMediaArray] = useState([]);
 
+// useEffect(() => {
+//     const getMedia = async () => {
+//       const json = await fetchData('test.json');
+//       setMediaArray(json);
+//     };
+//     getMedia();
+// }, []);
+
+
 useEffect(() => {
   const getMedia = async () => {
     try {
@@ -65,9 +74,7 @@ useEffect(() => {
   };
 
   getMedia();
-}, 
-    [ ]);
-
+}, []);
 
   return (
     <>
