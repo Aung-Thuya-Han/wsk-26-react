@@ -1,6 +1,6 @@
 import {Route, BrowserRouter, Routes} from 'react-router';
 import Layout from './components/Layout';
-import Home from './components/Home';
+import Home from './views/Home';
 import Profile from './views/Profile.jsx';
 import Single from './views/Single.jsx';
 import Upload from './views/Upload.jsx';
