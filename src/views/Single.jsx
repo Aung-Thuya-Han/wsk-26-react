@@ -11,6 +11,7 @@ const Single = () => {
   return (
     <>
       <h1>{media.title}</h1>
+      <p>Owner: {media.user.username}</p>
 
       <button onClick={() => navigate(-1)}>Go back</button>
 

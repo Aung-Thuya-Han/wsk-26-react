@@ -121,7 +121,6 @@ useEffect(() => {
             <th>Thumbnail</th>
             <th>User</th>
             <th>Title</th>
-            <th>Title</th>
             <th>Description</th>
             <th>Created</th>
             <th>Size</th>
