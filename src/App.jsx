@@ -5,6 +5,8 @@ import Profile from './views/Profile.jsx';
 import Single from './views/Single.jsx';
 import Upload from './views/Upload.jsx';
 
+
+
 const App = () => {
   
   return (

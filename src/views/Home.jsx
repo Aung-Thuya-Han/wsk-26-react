@@ -1,5 +1,5 @@
-import MediaRows from './components/MediaRows';
-import SingleView from './components/SingleView';
+import MediaRows from '../components/MediaRows';
+import SingleView from '../components/SingleView';
 import {useState} from 'react';
 
 
