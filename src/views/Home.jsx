@@ -66,12 +66,38 @@ useEffect(() => {
   const getMedia = async () => {
     try {
       const json = await fetchData(import.meta.env.VITE_MEDIA_API + '/media');
-      setMediaArray(json);
-      console.log(json);
+
+      const userListPromises = json.map((media) =>
+      fetchData(
+        import.meta.env.VITE_AUTH_API + '/users/' + media.user_id
+          )
+        );
+
+        const userListData = await Promise.all(userListPromises);
+
+
+        const combinedData = json.map((item) => {
+          const foundUser = userListData.find(
+            (user) => user.user_id === item.user_id
+          );
+
+          return {
+            ...item,
+            user: foundUser,
+          };
+        });
+
+      console.log('userListData', userListData);
+
+      setMediaArray(combinedData);
+
+      console.log('combinedData', combinedData);
+
     } catch (error) {
       console.error(error);
     }
   };
+
 
   getMedia();
 }, []);
@@ -93,6 +119,8 @@ useEffect(() => {
         <thead>
           <tr>
             <th>Thumbnail</th>
+            <th>User</th>
+            <th>Title</th>
             <th>Title</th>
             <th>Description</th>
             <th>Created</th>

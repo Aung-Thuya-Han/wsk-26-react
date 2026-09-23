@@ -17,6 +17,7 @@ const MediaRow = (props) => {
         </Link>
       </td>
 
+      <td>{media.user.username}</td>
       <td>{media.title}</td>
       <td>{media.description}</td>
       <td>{new Date(media.created_at).toLocaleDateString('fi-FI')}</td>
