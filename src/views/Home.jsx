@@ -1,8 +1,7 @@
 import MediaRows from '../components/MediaRows';
 import SingleView from '../components/SingleView';
-import {useState} from 'react';
 import {fetchData} from '../utils/fetchData';
-
+import {useEffect, useState} from 'react';
 
 
 const Home = () => {
@@ -54,13 +53,20 @@ const [selectedItem, setSelectedItem] = useState(null);
 
 const [mediaArray, setMediaArray] = useState([]);
 
-const getMedia = async () => {
-  const json = await fetchData('test.json');
-  setMediaArray(json);
-};
+useEffect(() => {
+  const getMedia = async () => {
+    try {
+      const json = await fetchData('test.json');
+      setMediaArray(json);
+      console.log(json);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-getMedia();
-console.log(mediaArray);
+  getMedia();
+}, 
+    [ ]);
 
 
   return (
