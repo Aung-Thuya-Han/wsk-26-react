@@ -20,4 +20,4 @@ If you are developing a production application, we recommend using TypeScript wi
 
 ## Web App in Metropolia Users
 
-Open https://users.metropolia.fi/~aungthuh/hooks/ to look in browser.
+Open https://users.metropolia.fi/~aungthuh/custom-hooks/ to look in browser.
