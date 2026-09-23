@@ -4,6 +4,8 @@ import Home from './views/Home';
 import Profile from './views/Profile.jsx';
 import Single from './views/Single.jsx';
 import Upload from './views/Upload.jsx';
+import Login from './views/Login.jsx';
+import Logout from './views/Logout';
 
 
 
@@ -29,6 +31,12 @@ const App = () => {
             element={<Upload />}
 
           />
+
+          <Route path="/login"
+          element={<Login />} />
+
+          <Route path="/logout"
+          element={<Logout />} />
 
         </Route>
       </Routes>
