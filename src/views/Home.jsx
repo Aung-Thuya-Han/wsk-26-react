@@ -65,7 +65,7 @@ const [mediaArray, setMediaArray] = useState([]);
 useEffect(() => {
   const getMedia = async () => {
     try {
-      const json = await fetchData('test.json');
+      const json = await fetchData(import.meta.env.VITE_MEDIA_API + '/media');
       setMediaArray(json);
       console.log(json);
     } catch (error) {
