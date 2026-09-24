@@ -9,5 +9,5 @@ export default defineConfig({
     babel({ presets: [reactCompilerPreset()] })
   ],
 
-  base: '/~aungthuh/custom-hooks/',
+  base: '/~aungthuh/forms/',
 })
