@@ -9,7 +9,7 @@ const Profile = () => {
   const {getUserByToken} = useUser();
 
   useEffect(() => {
-    const loadUser = () => {
+    const loadUser = async () => {
       const token = localStorage.getItem('token');
 
       if (!token) {
@@ -17,7 +17,7 @@ const Profile = () => {
       }
 
       try {
-        const result = getUserByToken(token);
+        const result = await getUserByToken(token);
         setUser(result.user);
       } catch(error) {
         console.log('error', error)
@@ -26,11 +26,28 @@ const Profile = () => {
 
     loadUser();
   },
-  
+
   []);
 
 
-  return <>My profile</>;
+  return (
+    <>
+  <h1>My Profile</h1>
+
+  {!user ? (
+
+    <p>You are not logged in yet.</p>
+    
+  ) : (
+    <>
+    <p>Username: {user.username}</p>
+    <p>Email: {user.email}</p>
+    </>
+  )
+}
+
+    </>
+  );
 };
 
 export default Profile;
