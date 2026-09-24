@@ -3,6 +3,23 @@
 import {fetchData} from '../utils/fetchData';
 import {useEffect, useState} from 'react';
 
+const useUser = () => {
+    const getUserByToken = (token) => {
+      const options = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        };
+
+        return fetchData(
+          import.meta.env.VITE_AUTH_API + '/users/token',
+          options
+        );
+      };
+
+      return {getUserByToken};
+  };
+
 
 const useAuthentication = () => {
 
@@ -79,3 +96,4 @@ const useMedia = () => {
 
 export {useMedia};
 export {useAuthentication};
+export {useUser};
