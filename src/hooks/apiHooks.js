@@ -3,6 +3,29 @@
 import {fetchData} from '../utils/fetchData';
 import {useEffect, useState} from 'react';
 
+
+const useAuthentication = () => {
+
+  const postLogin = async (inputs) => {
+    const fetchOptions = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(inputs),
+      };
+
+    const loginResult = await fetchData(import.meta.env.VITE_AUTH_API + '/auth/login', fetchOptions);
+    return loginResult;
+
+    }
+
+    return {postLogin};
+  }
+
+
+
+
 const useMedia = () => {
   // TODO: move mediaArray state here
   // TODO: move getMedia function here
@@ -55,3 +78,4 @@ const useMedia = () => {
 };
 
 export {useMedia};
+export {useAuthentication};
