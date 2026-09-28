@@ -14,9 +14,13 @@ const UserProvider = ({children}) => {
     const handleLogin = async (credentials) => {
         try {
             // TODO: post login credentials to API
+            const loginResult = await postLogin(credentials);
             // TODO: set token to local storage
+            localStorage.setItem('token', loginResult.token);
             // TODO: set user to state
+            setUser(loginResult.user);
             // TODO: navigate to home
+            navigate('/');
         } catch (e) {
             console.log(e.message);
         }
@@ -25,8 +29,11 @@ const UserProvider = ({children}) => {
     const handleLogout = () => {
         try {
             // TODO: remove token from local storage
+            localStorage.removeItem('token');
             // TODO: set user to null
+            setUser(null);
             // TODO: navigate to home or login page
+            navigate('/');
         } catch (e) {
             console.log(e.message);
         }
@@ -36,7 +43,13 @@ const UserProvider = ({children}) => {
     const handleAutoLogin = async () => {
         try {
             // TODO: get token from local storage
+            const token = localStorage.getItem('token')
             // TODO: if token exists, get user data from API
+            if (!token) {
+                const userResult = await getUserById(token);
+                setUser(userResult.user);
+                navigate('/');
+            }
             // TODO: set user to state
             // TODO: navigate to home
         } catch (e) {
@@ -45,9 +58,10 @@ const UserProvider = ({children}) => {
     };
 
     return (
-        <UserContext.Provider value={?what to provide?}>
+        <UserContext.Provider value={{user, handleLogin, handleLogout, handleAutoLogin}}>
             {children}
         </UserContext.Provider>
     );
 };
+
 export {UserProvider, UserContext};
