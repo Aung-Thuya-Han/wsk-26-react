@@ -6,7 +6,7 @@ import Single from './views/Single.jsx';
 import Upload from './views/Upload.jsx';
 import Login from './views/Login.jsx';
 import Logout from './views/Logout';
-import {UserProvider} from '../contexts/UserContext.jsx';
+import { UserProvider } from './contexts/UserContext.jsx';
 
 
 
@@ -14,7 +14,9 @@ const App = () => {
   
   return (
     <BrowserRouter basename={import.meta.env.BASE_URL}>
+      <UserProvider>
       <Routes>
+
         <Route element={<Layout />}>
           <Route path="/" element={<Home />} />
           <Route
@@ -41,13 +43,7 @@ const App = () => {
 
         </Route>
       </Routes>
-
-      <Router>
-        <UserProvider>
-            ...
-        </UserProvider>
-      </Router>
-      
+      </UserProvider>
     </BrowserRouter>
   );
 };

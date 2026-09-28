@@ -20,12 +20,14 @@ const LoginForm = () => {
         // TODO: add login functionalities here
 
             try {
-                const result = await postLogin(inputs);
-                localStorage.setItem('token', result.token);
-                navigate('/');
+                // const result = await postLogin(inputs);
+                // localStorage.setItem('token', result.token);
+                // navigate('/');
 
-            } catch (error) {
-                console.log(error)
+                handleLogin(inputs);
+
+            } catch (e) {
+                alert(e.message);
             }
 
         };
