@@ -1,73 +1,53 @@
-import { useAuthentication } from '../hooks/apiHooks';
-import useForm from '../hooks/formHooks';
-import {useNavigate} from 'react-router';
-import {useUserContext} from '../hooks/contextHooks';
-
+import useForm from "../hooks/formHooks";
+import { useUserContext } from "../hooks/contextHooks";
 
 const LoginForm = () => {
+  const { handleLogin } = useUserContext();
 
-    const initValues = {
-        username: '',
-        password: '',
-        };
+  const initValues = {
+    username: "",
+    password: "",
+  };
 
-    const {postLogin} = useAuthentication();
+  const doLogin = async (formInputs) => {
+    try {
+      await handleLogin(formInputs);
+    } catch (error) {
+      alert(error.message);
+    }
+  };
 
-    const navigate = useNavigate();
+  const { handleInputChange, handleSubmit } = useForm(doLogin, initValues);
 
-        const doLogin = async () => {
-        
-        // TODO: add login functionalities here
+  return (
+    <>
+      <h1>Login</h1>
 
-            try {
-                // const result = await postLogin(inputs);
-                // localStorage.setItem('token', result.token);
-                // navigate('/');
-
-                handleLogin(inputs);
-
-            } catch (e) {
-                alert(e.message);
-            }
-
-        };
-
-        const {inputs, handleInputChange, handleSubmit} = useForm(doLogin, initValues);
-
-        
-
-
-
-     return (
-         <>
-             <h1>Login</h1>
-             
-            <form onSubmit={handleSubmit}>
-                
-                  <div>
-                      <label htmlFor="loginuser">Username</label>
-                     <input
-                         name="username"
-                         type="text"
-                         id="loginuser"
-                         onChange={handleInputChange}
-                         autoComplete="username"
-                     />
-                 </div>
-                 <div>
-                     <label htmlFor="loginpassword">Password</label>
-                      <input
-                         name="password"
-                         type="password"
-                         id="loginpassword"
-                         onChange={handleInputChange}
-                         autoComplete="current-password"
-                     />
-                 </div>
-                 <button type="submit">Login</button>
-             </form>
-         </>
-     );
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label htmlFor="loginuser">Username</label>
+          <input
+            name="username"
+            type="text"
+            id="loginuser"
+            onChange={handleInputChange}
+            autoComplete="username"
+          />
+        </div>
+        <div>
+          <label htmlFor="loginpassword">Password</label>
+          <input
+            name="password"
+            type="password"
+            id="loginpassword"
+            onChange={handleInputChange}
+            autoComplete="current-password"
+          />
+        </div>
+        <button type="submit">Login</button>
+      </form>
+    </>
+  );
 };
 
 export default LoginForm;

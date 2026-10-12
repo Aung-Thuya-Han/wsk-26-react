@@ -1,67 +1,70 @@
-import {createContext, useState} from 'react';
-import {useAuthentication, useUser} from '../hooks/apiHooks';
-import {useNavigate} from 'react-router';
+import { createContext, useState } from "react";
+import { useLocation, useNavigate } from "react-router";
+import { useAuthentication, useUser } from "../hooks/apiHooks";
 
 const UserContext = createContext(null);
 
-const UserProvider = ({children}) => {
-    const [user, setUser] = useState(null);
-    const {postLogin} = useAuthentication();
-    const {getUserByToken} = useUser();
-    const navigate = useNavigate();
+const UserProvider = ({ children }) => {
+  const [user, setUser] = useState(null);
+  const [isCheckingUser, setIsCheckingUser] = useState(true);
+  const { postLogin } = useAuthentication();
+  const { getUserByToken } = useUser();
+  const navigate = useNavigate();
+  const location = useLocation();
 
-    // login, logout and autologin functions are here instead of components
-    const handleLogin = async (credentials) => {
-        try {
-            // TODO: post login credentials to API
-            const loginResult = await postLogin(credentials);
-            // TODO: set token to local storage
-            localStorage.setItem('token', loginResult.token);
-            // TODO: set user to state
-            setUser(loginResult.user);
-            // TODO: navigate to home
-            navigate('/');
-        } catch (e) {
-            console.log(e.message);
-        }
-    };
+  // Login, logout and auto-login are shared through the context.
+  const handleLogin = async (credentials) => {
+    try {
+      const loginResult = await postLogin(credentials);
+      localStorage.setItem("token", loginResult.token);
+      setUser(loginResult.user);
+      navigate("/");
+    } catch (error) {
+      console.error(error.message);
+      throw error;
+    }
+  };
 
-    const handleLogout = () => {
-        try {
-            // TODO: remove token from local storage
-            localStorage.removeItem('token');
-            // TODO: set user to null
-            setUser(null);
-            // TODO: navigate to home or login page
-            navigate('/');
-        } catch (e) {
-            console.log(e.message);
-        }
-    };
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    setUser(null);
+    navigate("/");
+  };
 
-    // handleAutoLogin is used when the app is loaded to check if there is a valid token in local storage
-    const handleAutoLogin = async () => {
-        try {
-            // TODO: get token from local storage
-            const token = localStorage.getItem('token')
-            // TODO: if token exists, get user data from API
-            if (!token) {
-                const userResult = await getUserById(token);
-                setUser(userResult.user);
-                navigate('/');
-            }
-            // TODO: set user to state
-            // TODO: navigate to home
-        } catch (e) {
-            console.log(e.message);
-        }
-    };
+  // Auto-login restores the user after the browser page is refreshed.
+  const handleAutoLogin = async () => {
+    try {
+      const token = localStorage.getItem("token");
 
-    return (
-        <UserContext.Provider value={{user, handleLogin, handleLogout, handleAutoLogin}}>
-            {children}
-        </UserContext.Provider>
-    );
+      if (token) {
+        const userResult = await getUserByToken(token);
+        setUser(userResult.user);
+        navigate(location.pathname);
+      }
+    } catch (error) {
+      console.error(error.message);
+      localStorage.removeItem("token");
+      setUser(null);
+    } finally {
+      setIsCheckingUser(false);
+    }
+  };
+
+  return (
+    <UserContext.Provider
+      value={{
+        user,
+        isCheckingUser,
+        handleLogin,
+        handleLogout,
+        handleAutoLogin,
+      }}
+    >
+      {children}
+    </UserContext.Provider>
+  );
 };
 
-export {UserProvider, UserContext};
+// The assignment asks the custom hook to import this context from this file.
+// eslint-disable-next-line react-refresh/only-export-components
+export { UserProvider, UserContext };
