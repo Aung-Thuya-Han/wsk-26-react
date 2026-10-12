@@ -1,90 +1,84 @@
-// TODO: add necessary imports
-
-import {fetchData} from '../utils/fetchData';
-import {useEffect, useState} from 'react';
-
-const useUser = () => {
-    const getUserByToken = (token) => {
-      const options = {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        };
-
-        return fetchData(
-          import.meta.env.VITE_AUTH_API + '/users/token',
-          options
-        );
-      };
-
-
-      const postUser = async (inputs) => {
-        const options = {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-
-          },
-          body: JSON.stringify(inputs),
-        }
-
-        return await fetchData(
-          import.meta.env.VITE_AUTH_API + '/users', options
-        )
-      }
-
-      
-      return {getUserByToken, postUser};
-      
-  };
-
+import { useEffect, useState } from "react";
+import { fetchData } from "../utils/fetchData";
 
 const useAuthentication = () => {
-
   const postLogin = async (inputs) => {
-    const fetchOptions = {
-      method: 'POST',
+    const options = {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(inputs),
-      };
+    };
 
-    const loginResult = await fetchData(import.meta.env.VITE_AUTH_API + '/auth/login', fetchOptions);
-    return loginResult;
+    return await fetchData(
+      import.meta.env.VITE_AUTH_API + "/auth/login",
+      options,
+    );
+  };
 
-    }
+  return { postLogin };
+};
 
-    return {postLogin};
-  }
+const useFile = () => {
+  const postFile = async (file, token) => {
+    const formData = new FormData();
+    formData.append("file", file);
 
+    const options = {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: formData,
+    };
 
+    return await fetchData(
+      import.meta.env.VITE_UPLOAD_SERVER + "/upload",
+      options,
+    );
+  };
 
+  return { postFile };
+};
 
 const useMedia = () => {
-  // TODO: move mediaArray state here
-  // TODO: move getMedia function here
-  // TODO: move useEffect here
-
   const [mediaArray, setMediaArray] = useState([]);
 
+  const postMedia = async (fileData, inputs, token) => {
+    const mediaData = {
+      title: inputs.title,
+      description: inputs.description,
+      filename: fileData.filename,
+      media_type: fileData.media_type,
+      filesize: fileData.filesize,
+    };
+
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(mediaData),
+    };
+
+    return await fetchData(import.meta.env.VITE_MEDIA_API + "/media", options);
+  };
+
   useEffect(() => {
-  const getMedia = async () => {
-    try {
-      const json = await fetchData(import.meta.env.VITE_MEDIA_API + '/media');
+    const getMedia = async () => {
+      try {
+        const json = await fetchData(import.meta.env.VITE_MEDIA_API + "/media");
 
-      const userListPromises = json.map((media) =>
-      fetchData(
-        import.meta.env.VITE_AUTH_API + '/users/' + media.user_id
-          )
+        const userListPromises = json.map((media) =>
+          fetchData(import.meta.env.VITE_AUTH_API + "/users/" + media.user_id),
         );
-
         const userListData = await Promise.all(userListPromises);
-
 
         const combinedData = json.map((item) => {
           const foundUser = userListData.find(
-            (user) => user.user_id === item.user_id
+            (user) => user.user_id === item.user_id,
           );
 
           return {
@@ -93,25 +87,42 @@ const useMedia = () => {
           };
         });
 
-      console.log('userListData', userListData);
+        setMediaArray(combinedData);
+      } catch (error) {
+        console.error(error);
+      }
+    };
 
-      setMediaArray(combinedData);
+    getMedia();
+  }, []);
 
-      console.log('combinedData', combinedData);
-
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-
-  getMedia();
-}, []);
-
-
-  return {mediaArray};
+  return { mediaArray, postMedia };
 };
 
-export {useMedia};
-export {useAuthentication};
-export {useUser};
+const useUser = () => {
+  const getUserByToken = (token) => {
+    const options = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    return fetchData(import.meta.env.VITE_AUTH_API + "/users/token", options);
+  };
+
+  const postUser = async (inputs) => {
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(inputs),
+    };
+
+    return await fetchData(import.meta.env.VITE_AUTH_API + "/users", options);
+  };
+
+  return { getUserByToken, postUser };
+};
+
+export { useAuthentication, useFile, useMedia, useUser };

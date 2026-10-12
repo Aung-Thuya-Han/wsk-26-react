@@ -6,5 +6,5 @@ import { defineConfig } from "vite";
 export default defineConfig({
   plugins: [react(), babel({ presets: [reactCompilerPreset()] })],
 
-  base: "/~aungthuh/context/",
+  base: "/~aungthuh/upload/",
 });
